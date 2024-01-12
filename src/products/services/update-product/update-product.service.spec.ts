@@ -76,7 +76,7 @@ describe('UpdateProductService', () => {
     expect(result.name).toEqual(payload.name);
     expect(result.price).toEqual(payload.price);
 
-    expect(clientProxyMock.emit).toHaveBeenCalledWith('product_created', {
+    expect(clientProxyMock.emit).toHaveBeenCalledWith('product_updated', {
       content: expect.stringContaining(`[PRODUCT UPDATED] with Id ${productId}`),
     });
 
