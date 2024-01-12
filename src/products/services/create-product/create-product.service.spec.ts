@@ -19,6 +19,12 @@ describe('CreateProductService', () => {
             },
           },
         },
+        {
+          provide: 'RABBITMQ_SERVICE',
+          useValue: {
+            emit: jest.fn(),
+          },
+        },
       ],
     }).compile();
 

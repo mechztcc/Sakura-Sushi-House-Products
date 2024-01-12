@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   Put,
   UseInterceptors,
@@ -27,10 +28,13 @@ export class ProductsController {
     return this.createProductService.execute(payload);
   }
 
-  @Put()
+  @Put(':id')
   @UseInterceptors(AuthorizationInterceptor)
-  async update(@Body() payload: UpdateProductDto) {
-    return await this.updateProduct.execute(payload);
+  async update(@Body() payload: UpdateProductDto, @Param('id') id: string) {
+    return await this.updateProduct.execute({
+      data: payload,
+      productId: Number(id),
+    });
   }
 
   @Get()

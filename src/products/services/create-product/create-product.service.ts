@@ -17,7 +17,7 @@ export class CreateProductService {
     });
 
     this.client.emit('product_created', {
-      content: `Product Created with Id ${product.id} and Name ${product.name} at ${product.createdAt}`,
+      content: `[PRODUCT CREATED] with Id ${product.id} and Name ${product.name} at ${product.createdAt}`,
     });
     return product;
   }
