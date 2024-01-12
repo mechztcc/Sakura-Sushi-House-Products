@@ -42,7 +42,7 @@ describe('UpdateProductService', () => {
     expect(sut).toBeDefined();
   });
 
-  it('should be update a exists product', async () => {
+  it('should be update a exists product and emit a msg to RABBITMQ', async () => {
     const productId: number = 12;
     const payload: UpdateProductDto = {
       description: 'Description',
@@ -75,6 +75,12 @@ describe('UpdateProductService', () => {
     expect(result.description).toEqual(payload.description);
     expect(result.name).toEqual(payload.name);
     expect(result.price).toEqual(payload.price);
+
+    expect(clientProxyMock.emit).toHaveBeenCalledWith('product_created', {
+      content: expect.stringContaining(`[PRODUCT UPDATED] with Id ${productId}`),
+    });
+
+
   });
 
   it('should be return 404 whe try to update a not found product', async () => {
