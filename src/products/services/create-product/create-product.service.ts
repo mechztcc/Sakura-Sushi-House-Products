@@ -13,6 +13,7 @@ export class CreateProductService {
   async execute({ name, description, price }: CreateProductDto) {
     const product = await this.prisma.product.create({
       data: { description, name, price },
+
     });
 
     this.client.emit('product_created', {

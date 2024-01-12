@@ -4,10 +4,11 @@ import { CreateProductService } from './services/create-product/create-product.s
 import { ProductsController } from './controllers/products.controller';
 import { ListAllService } from './services/list-all/list-all.service';
 import { RabbitmqModule } from 'src/logs/rabbitmq/rabbitmq.module';
+import { UpdateProductService } from './services/update-product/update-product.service';
 
 @Module({
   imports: [PrismaModule, RabbitmqModule],
-  providers: [CreateProductService, ListAllService],
+  providers: [CreateProductService, ListAllService, UpdateProductService],
   controllers: [ProductsController],
 })
 export class ProductsModule {}
