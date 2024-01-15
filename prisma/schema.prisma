@@ -16,6 +16,7 @@ model Product {
   name        String
   description String
   price       String
+  image       String    @default("")
   status      String    @default("running")
   size        String    @default("M")
   Category    Category? @relation(fields: [categoryId], references: [id])

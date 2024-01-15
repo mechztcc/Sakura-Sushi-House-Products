@@ -10,7 +10,13 @@ export class CreateProductService {
     @Inject('RABBITMQ_SERVICE') private readonly client: ClientProxy,
   ) {}
 
-  async execute({ name, description, price, categoryId }: CreateProductDto) {
+  async execute({
+    name,
+    description,
+    price,
+    categoryId,
+    image,
+  }: CreateProductDto) {
     const categoryExists = await this.prisma.category.findUnique({
       where: { id: categoryId },
     });
@@ -19,8 +25,10 @@ export class CreateProductService {
       throw new NotFoundException('Provided category has not found');
     }
 
+    console.log(image);
+    
     const product = await this.prisma.product.create({
-      data: { description, name, price, categoryId },
+      data: { description, name, price, categoryId, image },
     });
 
     this.client.emit('product_created', {
