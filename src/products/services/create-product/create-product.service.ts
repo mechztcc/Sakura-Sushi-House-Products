@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProductDto } from '../../dto/create-product.dto';
 import { PrismaService } from '../../../shared/prisma/services/prisma.service';
 import { ClientProxy } from '@nestjs/microservices';
@@ -10,10 +10,17 @@ export class CreateProductService {
     @Inject('RABBITMQ_SERVICE') private readonly client: ClientProxy,
   ) {}
 
-  async execute({ name, description, price }: CreateProductDto) {
-    const product = await this.prisma.product.create({
-      data: { description, name, price },
+  async execute({ name, description, price, categoryId }: CreateProductDto) {
+    const categoryExists = await this.prisma.category.findUnique({
+      where: { id: categoryId },
+    });
 
+    if (!categoryExists) {
+      throw new NotFoundException('Provided category has not found');
+    }
+
+    const product = await this.prisma.product.create({
+      data: { description, name, price, categoryId },
     });
 
     this.client.emit('product_created', {

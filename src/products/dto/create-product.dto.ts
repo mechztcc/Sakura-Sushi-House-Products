@@ -1,6 +1,7 @@
 import {
   IsEmail,
   IsNotEmpty,
+  IsNumber,
   IsString,
   MinLength,
   isString,
@@ -18,6 +19,10 @@ export class CreateProductDto {
   @IsString()
   @IsNotEmpty()
   size: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  categoryId: number;
 
   @IsString()
   @IsNotEmpty()
