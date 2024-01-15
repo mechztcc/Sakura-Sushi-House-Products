@@ -37,7 +37,7 @@ export class UpdateProductService {
     this.client.emit('product_updated', {
       content: `[PRODUCT UPDATED] with Id ${productExists.id} and Name ${productExists.name} at ${productExists.updatedAt}`,
     });
-    
+
     return productUpdated;
   }
 }
